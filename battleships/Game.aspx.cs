@@ -9,13 +9,6 @@ namespace battleships
 {
     public partial class Game : System.Web.UI.Page
     {
-        public static int difficulty = 1;
-
-        public static Cell[,] gameBoard;
-        private int gameSize;
-
-        public int SuccessfulHits { get; private set; }
-        public int NumberOfAttempts { get; private set; }
 
         // public static List<Ship> ships = new List<Ship>();
 
@@ -23,7 +16,18 @@ namespace battleships
         {
             if (!IsPostBack)
             {
-                DisplayBoard();
+                GameObject game = new GameObject();
+
+
+                if (Session["Game"] != null)
+                {
+                    game = (GameObject)Session["Game"];
+                } else
+                {
+                    //setup game
+                    SetupGame(game);
+                    Session["Game"] = game;
+                }
 
                 if (Request["action"] != null)
 
@@ -34,100 +38,95 @@ namespace battleships
                     {
                         if (Request["x"] != null && Request["y"] != null)
                         {
-                            CheckCell(Convert.ToInt32(Request["x"]), Convert.ToInt32(Request["y"]));
+                            CheckCell(Convert.ToInt32(Request["x"]), Convert.ToInt32(Request["y"]), game);
                         }
                     }
                 }
+
+                DisplayBoard(game);
             }
+
         }
 
-        protected void CheckCell(int x, int y)
+        protected void CheckCell(int x, int y, GameObject game)
         {
-            for (int coordY = 0; coordY < gameSize; coordY++)
+            for (int coordY = 0; coordY < game.gameSize; coordY++)
             {
-                for (int coordX = 0; coordX < gameSize; coordX++)
+                for (int coordX = 0; coordX < game.gameSize; coordX++)
                 {
-                    if (gameBoard[coordX, coordY].IsBoat)
+                    if (coordX == x && coordY == y)
                     {
-                        SuccessfulHits++;
-                        NumberOfAttempts++;
+                        var cell = game.gameBoard[coordX, coordY];
+
+                        if (cell.IsBoat && !cell.IsUsed)
+                        {
+                            game.SuccessfulHits++;
+                        }
+
+                        cell.IsUsed = true;
                     }
                 }
             }
+            game.NumberOfAttempts++;
         }
 
-        //protected void GenerateShips()
-        //{
-        //    if (difficulty == 1)
-        //    {
-                
-        //        //int[] Coordinate = new int[2] { 2, 3 };
-        //        //ships.Add(
-        //        //    new Ship(
-        //        //        new int[,] 
-        //        //        { 
-        //        //            { 2, 3 }
-        //        //        }));
-        //    }
-        //}
-
-        protected void SetupGame()
+        protected void SetupGame(GameObject game)
         {
-            switch (difficulty)
+            switch (game.difficulty)
             {
                 case 1:
-                    gameSize = 15;
+                    game.gameSize = 15;
                     break;
                 case 2:
-                    gameSize = 20;
+                    game.gameSize = 20;
                     break;
                 case 3:
-                    gameSize = 30;
+                    game.gameSize = 30;
                     break;
                 default:
-                    gameSize = 15;
+                    game.gameSize = 15;
                     break;
             }
 
-            for (int y = 0; y < gameSize; y++)
+            game.gameBoard = new Cell[game.gameSize, game.gameSize];
+
+            for (int y = 0; y < game.gameSize; y++)
             {
-                for (int x = 0; x < gameSize; x++)
+                for (int x = 0; x < game.gameSize; x++)
                 {
+                    game.gameBoard[x, y] = new Cell();
+
+                    // todo: randomize boat loactions instead
                     if (x == 10 && y == 2)
                     {
-                        gameBoard[x, y] = new Cell();
-                        gameBoard[x, y].IsBoat = true;
+                        game.gameBoard[x, y].IsBoat = true;
+                    } else if (x == 2 && y == 2)
+                    {
+                        game.gameBoard[x, y].IsBoat = true;
                     }
                 }
             }
 
         }
 
-        protected void DisplayBoard()
+        protected void DisplayBoard(GameObject game)
         {
-            
-
             string html = "";
-                for (int y = 0; y < gameSize; y++)
+            for (int y = 0; y < game.gameSize; y++)
+            {        
+                html += $"<tr id='{y}'>";
+                for (int x = 0; x < game.gameSize; x++)
                 {
-                    
-                    html += $"<tr id='{y}'>";
-                    for (int x = 0; x < gameSize; x++)
-                    {
-                        //gameBoard.Add(new Cell());
-
-                        //gameBoard[x, y] = 0;
-
-                        // ships.Find(x => x.Coordinates.Find(c => { c[0] == x && c[1] == y }));
-
-                        // todo check against shiplist
-                        //ShipList.foreach()
-
+                    var cell = game.gameBoard[x, y];
+                    if (cell.IsUsed && cell.IsBoat) 
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'>X</td>";
+                    else if (cell.IsUsed)
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'>O</td>";
+                    else
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'></td>";
-                    }
-                    html += "</tr>";
+                }
+                html += "</tr>";
             }
-
             gameLiteral.Text = html;
         }
     }
