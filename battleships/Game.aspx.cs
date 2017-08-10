@@ -94,7 +94,7 @@ namespace battleships
                     game.AirCraftCarriersCount = 4;
                     break;
                 default:
-                    game.GameSize = 12;
+                    game.GameSize = 10;
                     break;
             }
 
@@ -267,7 +267,7 @@ namespace battleships
                     else if (cell.IsUsed)
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'>O</td>";
                     else if (cell.IsBoat)
-                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'>B</td>";
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'></td>";
                     else
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'></td>";
                 }
