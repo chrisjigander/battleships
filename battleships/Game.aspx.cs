@@ -11,21 +11,33 @@ namespace battleships
     {
         public static int difficulty = 1;
 
+        public static int[,] gameBoard;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 GenerateBoard();
+
+                if (Request["CheckCell"] != null)
+                {
+                    if (Request["x"] != null && Request["y"] != null)
+                    {
+                        CheckCell(Convert.ToInt32(Request["x"]), Convert.ToInt32(Request["y"]));
+                    }
+                }
             }
         }
 
-        protected void CheckCell(object sender, EventArgs e)
+        protected void CheckCell(int x, int y)
         {
             
         }
 
         protected void GenerateBoard()
         {
+
+
             string html = "";
             // easy
             if (difficulty == 1)
@@ -35,7 +47,7 @@ namespace battleships
                     html += $"<tr id='{y}'>";
                     for (int x = 0; x < 15; x++)
                     {
-                        html += $"<td id='{x}' onClick='CheckCell({x}, {y})'></td>";
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'></td>";
                     }
                     html += "</tr>";
                 }
