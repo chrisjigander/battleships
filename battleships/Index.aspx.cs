@@ -16,7 +16,7 @@ namespace battleships
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            Server.Transfer("Game.aspx");
+            Server.Transfer("Game.aspx?difficulty=" + difficultyList.SelectedValue);
         }
     }
 }

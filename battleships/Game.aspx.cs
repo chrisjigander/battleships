@@ -22,15 +22,19 @@ namespace battleships
                 if (Session["Game"] != null)
                 {
                     game = (GameObject)Session["Game"];
-                } else
-                {
-                    //setup game
+                }
+                else
+                {                
+                    if (Request["difficulty"] != null)
+                    {
+                        game.difficulty = Convert.ToInt32(Request["difficulty"]);
+                    }
+
                     SetupGame(game);
                     Session["Game"] = game;
                 }
 
                 if (Request["action"] != null)
-
                 {
                     string request = Request["action"];
 
@@ -50,9 +54,9 @@ namespace battleships
 
         protected void CheckCell(int x, int y, GameObject game)
         {
-            for (int coordY = 0; coordY < game.gameSize; coordY++)
+            for (int coordY = 0; coordY < game.GameSize; coordY++)
             {
-                for (int coordX = 0; coordX < game.gameSize; coordX++)
+                for (int coordX = 0; coordX < game.GameSize; coordX++)
                 {
                     if (coordX == x && coordY == y)
                     {
@@ -75,24 +79,24 @@ namespace battleships
             switch (game.difficulty)
             {
                 case 1:
-                    game.gameSize = 15;
+                    game.GameSize = 8;
                     break;
                 case 2:
-                    game.gameSize = 20;
+                    game.GameSize = 12;
                     break;
                 case 3:
-                    game.gameSize = 30;
+                    game.GameSize = 16;
                     break;
                 default:
-                    game.gameSize = 15;
+                    game.GameSize = 12;
                     break;
             }
 
-            game.gameBoard = new Cell[game.gameSize, game.gameSize];
+            game.gameBoard = new Cell[game.GameSize, game.GameSize];
 
-            for (int y = 0; y < game.gameSize; y++)
+            for (int y = 0; y < game.GameSize; y++)
             {
-                for (int x = 0; x < game.gameSize; x++)
+                for (int x = 0; x < game.GameSize; x++)
                 {
                     game.gameBoard[x, y] = new Cell();
 
@@ -100,7 +104,8 @@ namespace battleships
                     if (x == 10 && y == 2)
                     {
                         game.gameBoard[x, y].IsBoat = true;
-                    } else if (x == 2 && y == 2)
+                    }
+                    else if (x == 2 && y == 2)
                     {
                         game.gameBoard[x, y].IsBoat = true;
                     }
@@ -112,13 +117,13 @@ namespace battleships
         protected void DisplayBoard(GameObject game)
         {
             string html = "";
-            for (int y = 0; y < game.gameSize; y++)
-            {        
+            for (int y = 0; y < game.GameSize; y++)
+            {
                 html += $"<tr id='{y}'>";
-                for (int x = 0; x < game.gameSize; x++)
+                for (int x = 0; x < game.GameSize; x++)
                 {
                     var cell = game.gameBoard[x, y];
-                    if (cell.IsUsed && cell.IsBoat) 
+                    if (cell.IsUsed && cell.IsBoat)
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'>X</td>";
                     else if (cell.IsUsed)
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'>O</td>";
