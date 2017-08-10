@@ -1,9 +1,37 @@
-﻿body {
+﻿@font-face {
+    font-family: 'OpTic';
+    src: url('../fonts/OpTic.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'WarTorn';
+    src: url('../fonts/WARTORN_.TTF') format('truetype');
+}
+@font-face {
+    font-family: 'WarIsOver';
+    src: url('../fonts/War is Over.ttf') format('truetype');
+}
+
+body {
     width: 100%;
+    /*background:*/
+    background: url('../Content/epicBattleShip.jpg') no-repeat center;
+    background-size: 100%;
 }
 
 td {
-    width: 20px;
-    height: 20px;
-    border: 2px solid;
+    width: 40px;
+    height: 40px;
+    border: 2px solid white;
+    background-color: rgba(0, 122, 150, 0.8);
+
+}
+
+table {
+    margin: 0 auto;
+}
+
+.jumbotron {
+    text-align: center;
+    font-family: WarIsOver;
+    font-size: 200px;
 }

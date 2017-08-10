@@ -5,3 +5,7 @@
         <asp:Literal ID="gameLiteral" runat="server"></asp:Literal>
     </table>
 </asp:Content>
+
+<%--<asp:Content ID="countHolder" ContentPlaceHolderID="main" runat="server">
+    
+</asp:Content>--%>
