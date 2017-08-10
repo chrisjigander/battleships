@@ -112,11 +112,6 @@ namespace battleships
                         game.gameBoard[x, y].IsBoat = true;
                     }
 
-                    //foreach (int[] coords in boatHolder)
-                    //{
-                    //    if (coords[0] == x && coords[1] == y)
-                    //        game.gameBoard[x, y].IsBoat = true;
-                    //}
                 }
             }
 
