@@ -70,6 +70,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\epicBattleShip.jpg" />
+    <Content Include="Content\explosion.png" />
+    <Content Include="Content\explosionSprite2.png" />
+    <Content Include="Content\fireSpriteSheet.png" />
+    <Content Include="Content\ripple.png" />
+    <Content Include="Content\singleFire.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Game.aspx" />
     <Content Include="Index.aspx" />

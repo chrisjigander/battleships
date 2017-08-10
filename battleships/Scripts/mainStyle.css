@@ -35,3 +35,13 @@ table {
     font-family: WarIsOver;
     font-size: 200px;
 }
+
+#fireImg {
+    height: 40px;
+    width: 40px;
+}
+
+#rippleImg {
+    height: 40px;
+    width: 40px;
+}

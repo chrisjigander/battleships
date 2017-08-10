@@ -48,9 +48,11 @@ namespace battleships
                 }
 
                 DisplayBoard(game);
+                DisplayStats(game);
             }
 
         }
+
 
         protected void CheckCell(int x, int y, GameObject game)
         {
@@ -258,6 +260,16 @@ namespace battleships
             return tempBoatHolder;
         }
 
+        protected void DisplayStats(GameObject game)
+        {
+            string html = "";
+            html += $"<h3>TOTAL ATTEMPTS: {game.NumberOfAttempts}</h3>";
+            html += $"<h3>SUCCESSFUL HITS: {game.SuccessfulHits}</h3>";
+            html += $"<h3>HITS REQUIRED: {game.HitsRequired()}</h3>";
+
+            statsLiteral.Text = html;
+        }
+
         protected void DisplayBoard(GameObject game)
         {
             string html = "";
@@ -268,9 +280,9 @@ namespace battleships
                 {
                     var cell = game.gameBoard[x, y];
                     if (cell.IsUsed && cell.IsBoat)
-                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'>X</td>";
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'><img id='fireImg' src='Content\\singleFire.png'></td>";
                     else if (cell.IsUsed)
-                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'>O</td>";
+                        html += $"<td id='{x}' onClick='checkCell({x}, {y})'><img id='rippleImg' src='Content\\ripple.png'></td>";
                     else if (cell.IsBoat)
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'></td>";
                     else

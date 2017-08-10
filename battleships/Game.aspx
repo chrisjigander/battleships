@@ -6,6 +6,6 @@
     </table>
 </asp:Content>
 
-<%--<asp:Content ID="countHolder" ContentPlaceHolderID="main" runat="server">
-    
-</asp:Content>--%>
+<asp:Content ID="countHolder" ContentPlaceHolderID="stats" runat="server">
+    <asp:Literal ID="statsLiteral" runat="server"></asp:Literal>
+</asp:Content>

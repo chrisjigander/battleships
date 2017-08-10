@@ -14,6 +14,13 @@
         public int SuccessfulHits { get; set; }
         public int NumberOfAttempts { get; set; }
 
+        public int HitsRequired()
+        {
+            return SubmarinesCount * SubmarinesSize +
+                   BattleShipsCount * BattleShipsSize +
+                   AirCraftCarriersCount * AirCraftCarriersSize;
+        }
+
         public int SubmarinesCount { get; set; } = 0;
         public int BattleShipsCount { get; set; } = 0;
         public int AirCraftCarriersCount { get; set; } = 0;
