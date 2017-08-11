@@ -1,16 +1,16 @@
 ﻿namespace battleships
 {
-    public class GameObject
+    public class GameClass
     {
-        public GameObject()
+        public GameClass()
         {
         }
 
-        public int difficulty { get; set; } = 3;
+        public int Difficulty { get; set; } = 3;
 
         public string Player { get; set; }
 
-        public Cell[,] gameBoard;
+        public Cell[,] GameBoard;
         public int GameSize { get; set; }
 
         public int SuccessfulHits { get; set; }
@@ -27,8 +27,8 @@
         public int BattleShipsCount { get; set; } = 0;
         public int AirCraftCarriersCount { get; set; } = 0;
 
-        public int SubmarinesSize { get; private set; } = 1;
-        public int BattleShipsSize { get; private set; } = 2;
-        public int AirCraftCarriersSize { get; private set; } = 3;
+        public int SubmarinesSize { get; } = 1;
+        public int BattleShipsSize { get; } = 2;
+        public int AirCraftCarriersSize { get; } = 3;
     }
 }

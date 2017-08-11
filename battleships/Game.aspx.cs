@@ -8,26 +8,24 @@ using System.Web.UI.WebControls;
 namespace battleships
 {
     public partial class Game : System.Web.UI.Page
-    {
-
-        // public static List<Ship> ships = new List<Ship>();
+    {        
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                GameObject game = new GameObject();
+                GameClass game = new GameClass();
 
 
                 if (Session["Game"] != null)
                 {
-                    game = (GameObject)Session["Game"];
+                    game = (GameClass)Session["Game"];
                 }
                 else
                 {                                   
                     if (Request["difficulty"] != null)
                     {
-                        game.difficulty = Convert.ToInt32(Request["difficulty"]);
+                        game.Difficulty = Convert.ToInt32(Request["difficulty"]);
                     }
 
                     if (Request["player"] != null)
@@ -61,8 +59,7 @@ namespace battleships
 
         }
 
-
-        protected void CheckCell(int x, int y, GameObject game)
+        protected void CheckCell(int x, int y, GameClass game)
         {
             for (int coordY = 0; coordY < game.GameSize; coordY++)
             {
@@ -70,7 +67,7 @@ namespace battleships
                 {
                     if (coordX == x && coordY == y)
                     {
-                        var cell = game.gameBoard[coordX, coordY];
+                        var cell = game.GameBoard[coordX, coordY];
 
                         if (cell.IsBoat && !cell.IsUsed)
                         {
@@ -85,19 +82,19 @@ namespace battleships
             CheckForWin(game);
         }
 
-        protected void CheckForWin(GameObject game)
+        protected void CheckForWin(GameClass game)
         {
             if (game.HitsRequired() == game.SuccessfulHits)
             {
-                SQLManager.AddHighScore(game.NumberOfAttempts, game.Player, game.difficulty);
+                SQLManager.AddHighScore(game.NumberOfAttempts, game.Player, game.Difficulty);
                 Session.Clear();
                 Server.Transfer($"Index.aspx?highscore={game.NumberOfAttempts}");
             }
         }
 
-        protected void SetupGame(GameObject game)
+        protected void SetupGame(GameClass game)
         {
-            switch (game.difficulty)
+            switch (game.Difficulty)
             {
                 case 1:
                     game.GameSize = 6;
@@ -119,7 +116,7 @@ namespace battleships
                     break;
             }
 
-            game.gameBoard = new Cell[game.GameSize, game.GameSize];        
+            game.GameBoard = new Cell[game.GameSize, game.GameSize];        
             List<int[]> boatHolder = GenerateBoatPositions(game);          
 
             // loop and place boats on coordinates
@@ -127,10 +124,10 @@ namespace battleships
             {
                 for (int x = 0; x < game.GameSize; x++)
                 {
-                    game.gameBoard[x, y] = new Cell(x, y);
+                    game.GameBoard[x, y] = new Cell(x, y);
                     if (BoatAtCoordinate(boatHolder, x, y))
                     {
-                        game.gameBoard[x, y].IsBoat = true;
+                        game.GameBoard[x, y].IsBoat = true;
                     }
 
                 }
@@ -151,7 +148,7 @@ namespace battleships
             return false;
         }
 
-        protected List<int[]> GenerateBoatPositions(GameObject game)
+        protected List<int[]> GenerateBoatPositions(GameClass game)
         {
             List<int[]> tempTotalBoats = new List<int[]>();
 
@@ -173,7 +170,7 @@ namespace battleships
             return tempTotalBoats;
         }
 
-        protected List<int[]> GenerateBoat(List<int[]> tempBoatHolder, int boatSize, GameObject game)
+        protected List<int[]> GenerateBoat(List<int[]> tempBoatHolder, int boatSize, GameClass game)
         {
             var accX = new int[boatSize];
             var accY = new int[boatSize];
@@ -256,7 +253,7 @@ namespace battleships
             return tempBoatHolder;
         }
 
-        protected void DisplayStats(GameObject game)
+        protected void DisplayStats(GameClass game)
         {
             string html = "";
             html += $"<h3>TOTAL ATTEMPTS: {game.NumberOfAttempts}</h3>";
@@ -266,7 +263,7 @@ namespace battleships
             statsLiteral.Text = html;
         }
 
-        protected void DisplayBoard(GameObject game)
+        protected void DisplayBoard(GameClass game)
         {
             string html = "";
             for (int y = 0; y < game.GameSize; y++)
@@ -274,7 +271,7 @@ namespace battleships
                 html += $"<tr id='{y}'>";
                 for (int x = 0; x < game.GameSize; x++)
                 {
-                    var cell = game.gameBoard[x, y];
+                    var cell = game.GameBoard[x, y];
                     if (cell.IsUsed && cell.IsBoat)
                         html += $"<td id='{x}' onClick='checkCell({x}, {y})'><img id='fireImg' src='Content\\singleFire.png'></td>";
                     else if (cell.IsUsed)

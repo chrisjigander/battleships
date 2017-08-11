@@ -1,14 +1,12 @@
 ﻿// variables
 var modal = document.getElementById('myModal');
-var audio = new Audio('./Content/bf3.mp3');
+
+// var audio = new Audio('./Content/bf3.mp3');
 
 var btn = document.getElementById("myBtn");
 var span = document.getElementsByClassName("close")[0];
 
 function checkCell(x, y) {
-
-    console.log(x, y);
-
     window.location.href = "game.aspx?action=CheckCell&x=" + x + "&y=" + y;
 }
 
@@ -21,10 +19,6 @@ function displayHighscore(highScore) {
 function displayModalBox() {
     modal.style.display = "block";
 }
-
-//function playAudio() {
-//    audio.play();
-//}
 
 
 // When the user clicks on <span> (x), close the modal
