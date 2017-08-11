@@ -18,9 +18,6 @@ namespace battleships
                 if (Request["highscore"] != null)
                 {                    
                     scriptLiteral.Text = $"<script>$(document).ready(() => (displayHighscore({Request["highscore"]})))</script>";
-                } else
-                {
-                    audioLiteral.Text = $"<script>$(document).ready(() => (audio.play()))</script>";
                 }
             }
         }
@@ -51,5 +48,23 @@ namespace battleships
             ScoreList.Text = html;
             scriptLiteral.Text = $"<script>$(document).ready(() => (displayModalBox()))</script>";
         }
+
+        //protected void ShowSavedGames_Click(object sender, EventArgs e)
+        //{
+        //    var games = SQLManager.GetStoredGames()
+        //        .OrderBy(s => s.Player);
+
+        //    //string html = $"<h1>Highscores (lvl {lvl})</h1>" +
+        //    //              $"<ul id='score-list'>";
+
+        //    //foreach (var score in scores)
+        //    //{
+        //    //    html += $"<li>Name: {score.Player}       Score: {score.HighScore}</li>";
+        //    //}
+
+        //    //html += "</ul>";
+        //    //ScoreList.Text = html;
+        //    //scriptLiteral.Text = $"<script>$(document).ready(() => (displayModalBox()))</script>";
+        //}
     }
 }

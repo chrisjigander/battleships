@@ -15,6 +15,7 @@
 
     <asp:Button ID="NewGameBtn" runat="server" Text="NEW GAME" OnClick="NewGameBtn_OnClick" />
     <asp:Button ID="ShowHighScores" runat="server" Text="SEE HIGHSCORES" OnClick="ShowHighScores_Click" />
+   <%-- <asp:Button ID="ShowSavedGames" runat="server" Text="SAVED GAMES" OnClick="ShowSavedGames_Click" />--%>
 </asp:Content>
 
 

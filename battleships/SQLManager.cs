@@ -75,5 +75,39 @@ namespace battleships
             }
             return scores;
         }
+
+        //public static List<GameObject> GetStoredGames()
+        //{
+        //    var scores = new List<GameObject>();
+
+        //    try
+        //    {
+        //        conn.Open();
+
+        //        SqlCommand command = new SqlCommand();
+        //        command.Connection = conn;
+        //        command.CommandType = System.Data.CommandType.StoredProcedure;
+        //        command.CommandText = "sp_GetGames";
+
+        //        SqlDataReader reader = command.ExecuteReader();
+
+        //        while (reader.Read())
+        //        {
+        //            // 
+        //            GameObject tempScore = new GameObject();
+        //            scores.Add(tempScore);
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //    finally
+        //    {
+        //        conn.Close();
+        //    }
+        //    return scores;
+        //}
     }
 }
