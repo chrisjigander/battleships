@@ -154,33 +154,19 @@ namespace battleships
         protected List<int[]> GenerateBoatPositions(GameObject game)
         {
             List<int[]> tempTotalBoats = new List<int[]>();
-            // +=
+
             for (int i = 0; i < game.AirCraftCarriersCount; i++)
             {
-                //var tempCarrierList = GenerateBoat(tempTotalBoats, game.AirCraftCarriersSize, game);
-                //tempCarrierList.ForEach(x => tempTotalBoats.Add(x));
                 tempTotalBoats = GenerateBoat(tempTotalBoats, game.AirCraftCarriersSize, game);
             }
 
             for (int i = 0; i < game.BattleShipsCount; i++)
             {
-                //var tempBattleList = GenerateBoat(tempTotalBoats, game.BattleShipsSize, game);
-                //tempBattleList.ForEach(x => tempTotalBoats.Add(x));
-
                 tempTotalBoats = GenerateBoat(tempTotalBoats, game.BattleShipsSize, game);
             }
 
             for (int i = 0; i < game.SubmarinesCount; i++)
             {
-                //var tempSubList = GenerateBoat(tempTotalBoats, game.SubmarinesSize, game);
-
-                //foreach (var sub in tempSubList)
-                //{
-                //    tempTotalBoats.Add(sub);
-                //}
-
-                //tempSubList.ForEach(x => tempTotalBoats.Add(x));
-
                tempTotalBoats = GenerateBoat(tempTotalBoats, game.SubmarinesSize, game);
             }
 
@@ -197,15 +183,17 @@ namespace battleships
 
             while (badPosition)
             {
-                // true 
+                // Horizontal or vertical?
                 var randomHolder = random.Next(0, 2);
 
                 // horizontal
                 if (randomHolder == 1)
                 {
+                    // randomize test boat start coordinates
                     int boatY = random.Next(0, game.GameSize);
                     int boatX = random.Next(0, game.GameSize - 2);
 
+                    // build test boat coordinates
                     for (int v = 0; v < boatSize; v++)
                     {
                         accX[v] = boatX + v;
@@ -214,6 +202,7 @@ namespace battleships
 
                     bool NoBoats = true;
 
+                    // check if test boat coordinates are ok
                     for (int p = 0; p < boatSize; p++)
                     {
                         if (BoatAtCoordinate(tempBoatHolder, accX[p], accY[p]))
@@ -223,14 +212,7 @@ namespace battleships
                     }
 
                     if (NoBoats)
-                        badPosition = false;
-                    //if (!BoatAtCoordinate(tempBoatHolder, accX[0], accY[0])
-                    //    && !BoatAtCoordinate(tempBoatHolder, accX[1], accY[1])
-                    //    && !BoatAtCoordinate(tempBoatHolder, accX[2], accY[2]))
-                    //{
-                    //    badPosition = false;
-                    //}
-
+                        badPosition = false;               
                 }
                 // vertical
                 else
