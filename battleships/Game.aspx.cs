@@ -24,14 +24,22 @@ namespace battleships
                     game = (GameObject)Session["Game"];
                 }
                 else
-                {                
+                {                                   
                     if (Request["difficulty"] != null)
                     {
                         game.difficulty = Convert.ToInt32(Request["difficulty"]);
                     }
 
+                    if (Request["player"] != null)
+                    {
+                        game.Player = Request["player"];
+                    }
+
                     SetupGame(game);
                     Session["Game"] = game;
+
+                    // music
+                    
                 }
 
                 if (Request["action"] != null)
@@ -74,6 +82,17 @@ namespace battleships
                 }
             }
             game.NumberOfAttempts++;
+            CheckForWin(game);
+        }
+
+        protected void CheckForWin(GameObject game)
+        {
+            if (game.HitsRequired() == game.SuccessfulHits)
+            {
+                SQLManager.AddHighScore(game.NumberOfAttempts, game.Player, game.difficulty);
+                Session.Clear();
+                Server.Transfer($"Index.aspx?highscore={game.NumberOfAttempts}");
+            }
         }
 
         protected void SetupGame(GameObject game)

@@ -2,17 +2,34 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="main" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="New Game" OnClick="Button1_Click" />
+
+    <h3>ENTER YOUR NAME, PRIVATE</h3>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="NO NAME, NO GAME!" ControlToValidate="nameInput" EnableClientScript="False"></asp:RequiredFieldValidator>
+    <input id="nameInput" type="text" runat="server" />
 
     <asp:RadioButtonList ID="difficultyList" runat="server" RepeatDirection="Horizontal">
-        <asp:ListItem Value="1">Easy</asp:ListItem>
-        <asp:ListItem Value="2">Medium</asp:ListItem>
-        <asp:ListItem Value="3">Hard</asp:ListItem>
+        <asp:ListItem selected="True" Value="1">EASY</asp:ListItem>
+        <asp:ListItem Value="2">MEDIUM</asp:ListItem>
+        <asp:ListItem  Value="3">HARD</asp:ListItem>    
     </asp:RadioButtonList>
-<%--    <form action="">
-       <input type="radio" id="btn-easy" value="1"> Easy<br>
-       <input type="radio" id="btn-medium" value="2"> Medium<br>
-       <input type="radio" id="btn-hard" value="3"> Hard
-    </form>--%>
+
+    <asp:Button ID="NewGameBtn" runat="server" Text="NEW GAME" OnClick="NewGameBtn_OnClick" />
+    <asp:Button ID="ShowHighScores" runat="server" Text="SEE HIGHSCORES" OnClick="ShowHighScores_Click" />
 </asp:Content>
 
+
+<asp:Content ContentPlaceHolderID="bottomScripts" ID="scripts" runat="server">
+    <asp:Literal ID="scriptLiteral" runat="server"></asp:Literal>
+    <asp:Literal ID="audioLiteral" runat="server"></asp:Literal>
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="modal" ID="modalBox" runat="server">
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="scoreText"></p>
+            <asp:Literal ID="ScoreList" runat="server"></asp:Literal>
+        </div>
+    </div>
+</asp:Content>

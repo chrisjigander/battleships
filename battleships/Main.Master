@@ -15,16 +15,25 @@
         <div>
             <div class="jumbotron">
                 <h1>BATTLESHIP</h1>
+            </div>
+            <div class="stats-div">
                 <asp:ContentPlaceHolder ID="stats" runat="server">
                 </asp:ContentPlaceHolder>
             </div>
+            
+            <div id="main-content">
+                <asp:ContentPlaceHolder ID="main" runat="server">
+                </asp:ContentPlaceHolder>
+            </div>
 
-            <asp:ContentPlaceHolder ID="main" runat="server">
+            <asp:ContentPlaceHolder ID="modal" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </form>
     <script src="Scripts/jquery-1.9.1.min.js"></script>
     <script src="Scripts/bootstrap.min.js"></script>
     <script src="Scripts/JavaScript.js"></script>
+
+    <asp:ContentPlaceHolder ID="bottomScripts" runat="server"></asp:ContentPlaceHolder>
 </body>
 </html>

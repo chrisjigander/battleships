@@ -8,6 +8,8 @@
 
         public int difficulty { get; set; } = 3;
 
+        public string Player { get; set; }
+
         public Cell[,] gameBoard;
         public int GameSize { get; set; }
 
