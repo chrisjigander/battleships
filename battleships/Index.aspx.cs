@@ -49,22 +49,22 @@ namespace battleships
             scriptLiteral.Text = $"<script>$(document).ready(() => (displayModalBox()))</script>";
         }
 
-        //protected void ShowSavedGames_Click(object sender, EventArgs e)
-        //{
-        //    var games = SQLManager.GetStoredGames()
-        //        .OrderBy(s => s.Player);
+        protected void ShowSavedGames_Click(object sender, EventArgs e)
+        {
+            var games = SQLManager.GetStoredGames()
+                .OrderBy(s => s.NumberOfAttempts);
 
-        //    //string html = $"<h1>Highscores (lvl {lvl})</h1>" +
-        //    //              $"<ul id='score-list'>";
+            string html = $"<h1>Highscores (lvl {games.First().Difficulty})</h1>" +
+                          $"<ul id='score-list'>";
 
-        //    //foreach (var score in scores)
-        //    //{
-        //    //    html += $"<li>Name: {score.Player}       Score: {score.HighScore}</li>";
-        //    //}
+            foreach (var score in games)
+            {
+                html += $"<li>Name: {score.Player}       Score: {score.NumberOfAttempts}</li>";
+            }
 
-        //    //html += "</ul>";
-        //    //ScoreList.Text = html;
-        //    //scriptLiteral.Text = $"<script>$(document).ready(() => (displayModalBox()))</script>";
-        //}
+            html += "</ul>";
+            ScoreList.Text = html;
+            scriptLiteral.Text = $"<script>$(document).ready(() => (displayModalBox()))</script>";
+        }
     }
 }

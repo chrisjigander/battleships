@@ -5,6 +5,8 @@ using System.Web;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 using System.Data.Sql;
+using Newtonsoft.Json;
+using battleships;
 
 namespace battleships
 {
@@ -76,38 +78,62 @@ namespace battleships
             return scores;
         }
 
-        //public static List<GameObject> GetStoredGames()
-        //{
-        //    var scores = new List<GameObject>();
+        public static void AddSaveGame(GameClass game)
+        {
+            try
+            {
+                conn.Open();
 
-        //    try
-        //    {
-        //        conn.Open();
+                // create json string
+                string jsonString = JsonConvert.SerializeObject(game);
 
-        //        SqlCommand command = new SqlCommand();
-        //        command.Connection = conn;
-        //        command.CommandType = System.Data.CommandType.StoredProcedure;
-        //        command.CommandText = "sp_GetGames";
+                SqlCommand command = new SqlCommand();
+                command.Connection = conn;
+                command.CommandText = "insert into StoredGames(jsonstring) values('" + jsonString + "');";
+            }
+            catch (Exception)
+            {
 
-        //        SqlDataReader reader = command.ExecuteReader();
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
-        //        while (reader.Read())
-        //        {
-        //            // 
-        //            GameObject tempScore = new GameObject();
-        //            scores.Add(tempScore);
-        //        }
+        public static List<GameClass> GetStoredGames()
+        {
+            var scores = new List<GameClass>();
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw;
-        //    }
-        //    finally
-        //    {
-        //        conn.Close();
-        //    }
-        //    return scores;
-        //}
+            try
+            {
+                conn.Open();
+
+                SqlCommand command = new SqlCommand();
+                command.Connection = conn;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandText = "sp_GetGames";
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // 
+                    GameClass tempScore = new GameClass();
+                    scores.Add(tempScore);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return scores;
+        }
     }
 }

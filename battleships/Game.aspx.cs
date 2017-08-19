@@ -87,6 +87,7 @@ namespace battleships
             if (game.HitsRequired() == game.SuccessfulHits)
             {
                 SQLManager.AddHighScore(game.NumberOfAttempts, game.Player, game.Difficulty);
+                SQLManager.AddSaveGame(game);
                 Session.Clear();
                 Server.Transfer($"Index.aspx?highscore={game.NumberOfAttempts}");
             }
